@@ -5,9 +5,20 @@ import FilterButton from "./components/FilterButton";
 import React,{ useState } from "react";
 import { nanoid } from "nanoid";
 
-function App(props) {
-  const [tasks,setTasks]=useState(props.tasks);
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed
+};
 
+function App(props) {
+  const [filter, setFilter] = useState('All');
+  const FILTER_NAMES = Object.keys(FILTER_MAP);
+  const filterList=FILTER_NAMES.map((name)=>(
+    <FilterButton name={name} key={name}/>
+  ));
+
+  const [tasks,setTasks]=useState(props.tasks);
   const taskList = tasks?.map((task) => (
     <Todo 
       id={task.id} 
@@ -61,15 +72,7 @@ function App(props) {
       <h1>TodoMatic</h1>
       <Form addTask={addTask}/>
       <div className="filters btn-group stack-exception">
-        <button
-          type="button"
-          onClick={()=>alert("Hello")}
-        >
-          Say Hi!
-        </button>
-        <FilterButton/>
-        <FilterButton/>
-        <FilterButton/>
+        {filterList}
       </div>
       <h2 id="list-heading">
         {headingText}
