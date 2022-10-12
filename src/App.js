@@ -15,11 +15,18 @@ function App(props) {
   const [filter, setFilter] = useState('All');
   const FILTER_NAMES = Object.keys(FILTER_MAP);
   const filterList=FILTER_NAMES.map((name)=>(
-    <FilterButton name={name} key={name}/>
+    <FilterButton 
+      name={name} 
+      key={name}
+      isPressed={name === filter}
+      setFilter={setFilter}
+    />
   ));
 
   const [tasks,setTasks]=useState(props.tasks);
-  const taskList = tasks?.map((task) => (
+  const taskList = tasks
+  ?.filter(FILTER_MAP[filter])
+  ?.map((task) => (
     <Todo 
       id={task.id} 
       name={task.name} 
