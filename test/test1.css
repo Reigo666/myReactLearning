@@ -1,0 +1,7 @@
+.root{
+    width: 600px;
+    height: 200px;
+    background-color: #f00;
+    padding: 20px 20px;
+    box-sizing:border-box;
+}
