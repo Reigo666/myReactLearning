@@ -20,11 +20,11 @@ app.get('/users',(request,response1)=>{
     ]
     axios.get(`https://api.github.com/search/users${search}`).then(
         response => {
-            console.log('访问github成功了,返回真实数据');
+            console.log('访问github成功了,返回真实数据\n\n');
             data=response.data;
         },
         error => {
-            console.log('访问github失败了,返回人造数据');
+            console.log('访问github失败了,返回人造数据\n\n');
             data=users
         }
     ).then(

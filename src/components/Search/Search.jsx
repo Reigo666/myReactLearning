@@ -3,12 +3,17 @@ import React, { Component } from 'react'
 import './index.css'
 export default class Search extends Component {
   search=()=>{
+    const {setUsers}=this.props
     const {keyWordElement:{value:keyWord}}=this
     console.log(keyWord);
     axios.get(`http://localhost:3000/api1/users?q=${keyWord}`).then(
-      response => {console.log('成功了',response.data);},
+      response => {
+        console.log('成功了',response.data);
+        setUsers(response.data.items)
+      },
       error => {console.log('失败了',error);}
     )
+    
   }
 
   render() {
