@@ -1,4 +1,4 @@
-IncomingMessage:{
+{
     _readableState: ReadableState {
       objectMode: false,
       highWaterMark: 16384,
