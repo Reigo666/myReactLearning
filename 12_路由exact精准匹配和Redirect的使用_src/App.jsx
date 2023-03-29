@@ -28,8 +28,8 @@ export default class App extends Component {
                     <NavLink  activeClassName='demo' className="list-group-item" to='/home'>Home</NavLink> */}
 
                     {/* 使用封装NavLink */}
-                    <MyNavLink to='/about'>About</MyNavLink>
-                    <MyNavLink to='/home'>Home</MyNavLink>
+                    <MyNavLink to='/atguigu/about'>About</MyNavLink>
+                    <MyNavLink to='/atguigu/home'>Home</MyNavLink>
                 </div>
             </div>
 
@@ -40,9 +40,9 @@ export default class App extends Component {
                         <Switch>
                             {/* Redirect没有匹配上路由时默认匹配一个 */}
                             {/* exact exact={true}确保精准匹配 */}
-                            <Route path='/about' component={About}/>
-                            <Route path='/home' component={Home}/>
-                            <Redirect to='/home'/>
+                            <Route path='/atguigu/about' component={About}/>
+                            <Route exact path='/atguigu/home' component={Home}/>
+                            <Redirect to='/atguigu/home'/>
                         </Switch>
                     </div>
                 </div>

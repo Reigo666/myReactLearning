@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {NavLink,Redirect,Route, Switch} from 'react-router-dom'
+import {NavLink,Route, Switch} from 'react-router-dom'
 import About from './pages/About'
 import Home from './pages/Home'
 import MyNavLink from './components/MyNavLink'
@@ -28,8 +28,8 @@ export default class App extends Component {
                     <NavLink  activeClassName='demo' className="list-group-item" to='/home'>Home</NavLink> */}
 
                     {/* 使用封装NavLink */}
-                    <MyNavLink to='/about'>About</MyNavLink>
-                    <MyNavLink to='/home'>Home</MyNavLink>
+                    <MyNavLink to='/atguigu/about'>About</MyNavLink>
+                    <MyNavLink to='/atguigu/home'>Home</MyNavLink>
                 </div>
             </div>
 
@@ -38,12 +38,15 @@ export default class App extends Component {
                     <div className="panel-body">
                         {/* Switch保证每次只匹配一个路由 */}
                         <Switch>
-                            {/* Redirect没有匹配上路由时默认匹配一个 */}
-                            {/* exact exact={true}确保精准匹配 */}
-                            <Route path='/about' component={About}/>
-                            <Route path='/home' component={Home}/>
-                            <Redirect to='/home'/>
+                            <Route path='/atguigu/about' component={About}/>
+                            <Route path='/atguigu/home' component={Home}/>
                         </Switch>
+                        {/* 
+                            使用二级路由后,解决样式丢失的三种办法
+                                1.将本地样式表中路径./中不要加.
+                                2.路径中使用%PUBLIC_URL%
+                                3.使用HashRouter,不常用
+                        */}
                     </div>
                 </div>
             </div>
