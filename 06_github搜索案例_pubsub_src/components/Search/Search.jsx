@@ -22,7 +22,7 @@ export default class Search extends Component {
         console.log('成功了',response.data);
         //搜索成功后更改isLoading状态
         // updateAppState({isLoading:false,users:response.data.items})
-        PubSub.publish('Search_to_List',{isLoading:false,users:response.data.items})
+        PubSub.publish('Search_to_List',{isLoading:false,users:response.data.items || []})
       },
       error => {
         console.log('失败了',error);

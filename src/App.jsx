@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { Button, Space } from 'antd';
+import { DatePicker,Button, Space } from 'antd';
 import {WeiboOutlined} from '@ant-design/icons';
+const { RangePicker } = DatePicker;
 // import 'antd/dist/reset.css';
+
+
 
 export default class App extends Component {
   
   render() {
+    
     return (
       <div>
         App...
@@ -19,6 +23,17 @@ export default class App extends Component {
 
         <div>
           <WeiboOutlined />
+        </div>
+
+        <div>
+        <Space direction="vertical" size={12}>
+          <RangePicker />
+          <RangePicker showTime />
+          <RangePicker picker="week" />
+          <RangePicker picker="month" />
+          <RangePicker picker="quarter" />
+          <RangePicker picker="year" />
+        </Space>
         </div>
       </div>
     )
