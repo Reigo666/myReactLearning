@@ -51,7 +51,7 @@ export default class Message extends Component {
         this.props.history.go(-2)
     }
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div>
                 <ul>
