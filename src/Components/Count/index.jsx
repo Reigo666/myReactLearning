@@ -24,7 +24,8 @@ export default class Count extends Component {
         },500)
     }
   render() {
-    const state=store.getState()
+    // 从countReducer中得到状态
+    const state=store.getState().countReducer
     const {count}=state
     return (
       <div>
