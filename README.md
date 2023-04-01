@@ -55,3 +55,23 @@
         新增文件:
                 1.count_action.js 专门用于创建action对象
                 2.constant.js 放置容易写错的type值
+
+## 十九、求和案例_redux异步action版
+        (1).明确：延迟的动作不想交给组件自身，想交给action
+        (2).何时需要异步action：想要对状态进行操作，但是具体的数据靠异步任务返回（非必须）
+        (3).具体编码：
+                1).npm i redux-thunk,并配置在store中,const store=createStore(rootReducers,applyMiddleware(thunk))
+                2).创建action的时候不再返回一般对象，而是一个函数，该函数中写异步任务
+                3).异步任务有结果后，分发一个同步的action去真正操作数据
+        (4).备注:异步action不是必须要写的，完全可以自己等待异步任务的结果再去分发同步action。即可以在原组件完成异步操作，无需在action中完成异步操作。
+        (5).备注:createxxxAction中如果返回的是对象那么store将把action{type,data} dispatch给store;如果返回的是函数，将开启一个异步线程，完成返回函数里的内容，函数里需要再次同步dispatch(action)。
+
+## 二十、求和案例_react-redux基本使用
+        (1).明确两个概念:
+                1).UI组件:不能使用任何redux的api,只负责页面的呈现、交互等。
+                2)容器组件：负责和redux通信，将结果交给UI组件
+        (2).如何闯一个容器组件-----靠react-redux的connect函数
+                connect(mapStateToProps,mapDispatchToProps)(UI组件)
+                        -mapStateToProps:映射状态，返回值是一个对象
+                        -mapDispatchToProps:映射操作状态的方法，返回值是一个对象
+        (3).备注：容器组件中的store是靠props传进去的，而不是在容器组件中直接引入
