@@ -5,35 +5,34 @@
 */
 //引入connect用于连接UI组件与redux(Component组件)
 import {connect} from 'react-redux'
-import {createDecrementAction,createIncrementAction,createIncrementAsyncAction} from '../../redux/actions/count_action'
+import {createDecrementAction,createIncrementAction,createIncrementAsyncAction} from '../../redux/count_action'
 import React, { Component } from 'react'
 
 /* CountUI的组件 */
 class CountUI extends Component {
     increment=()=>{
         const {value}=this.selectNumberElement
-        this.props.increment(value*1)
+        this.props.increment({value:value*1})
     }
     decrement=()=>{
         const {value}=this.selectNumberElement
-        this.props.decrement(value*1)
+        this.props.decrement({value:value*1})
     }
     incrementIfOdd=()=>{
-        const {count}=this.props
+        const {count}=this.props.countReducer
         if(count%2===0)return;
         this.increment()
     }
     incrementAsync=()=>{
         const {value}=this.selectNumberElement
-        this.props.incrementAsync(value*1,500)
+        this.props.incrementAsync({value:value*1},500)
     }
   render() {
     // console.log('CountUI中的props',this.props);
-    const {count,persons}=this.props
-    const numOfPeople=persons.length
+    const {count}=this.props.countReducer
     return (
       <div>
-        <h1>这是Count组件,当前求和为{count},下面组件人数为{numOfPeople}</h1>
+        <h1>当前求和为{count}</h1>
         <select ref={c=>this.selectNumberElement=c}>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -50,7 +49,7 @@ class CountUI extends Component {
 
 /* CountUI的container组件 */
 export default connect(
-    state=>({...state}),//将store中数据全部读出
+    state=>({...state}),
     ({
         increment: createIncrementAction,
         decrement:createDecrementAction,

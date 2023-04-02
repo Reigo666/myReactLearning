@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Count from './containers/Count'
-import Person from './containers/Person'
 import Get from './containers/Get'
 import store from './redux/store'
 export default class App extends Component {
@@ -10,8 +9,7 @@ export default class App extends Component {
     return (
       <div>
         <Count/>
-        <hr/>
-        <Person/>
+        {/* <Get store={store} /> */}
       </div>
     )
   }
