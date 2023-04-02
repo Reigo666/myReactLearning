@@ -74,4 +74,5 @@
                 connect(mapStateToProps,mapDispatchToProps)(UI组件)
                         -mapStateToProps:映射状态，返回值是一个对象
                         -mapDispatchToProps:映射操作状态的方法，返回值是一个对象
-        (3).备注：容器组件中的store是靠props传进去的，而不是在容器组件中直接引入
+        (3).备注1：容器组件中的store是靠props传进去的，而不是在容器组件中直接引入
+        (4).备注2: mapDispatchToProps，也可以是一个对象
