@@ -103,4 +103,55 @@
                 4)定义constant和createAction方法
                 5)配置store中的combineReducers,和store中state的名称
                 6)在Person中的connect将想要的状态和操作状态的方法取回使用
-                
+
+
+## 二十二、纯函数
+        1.一类特别的函数:只要是同样的输入(实参),必定得到同样(确定)的输出(返回)
+        2.必须遵守以下一些约束
+                1)不得改写参数数据 preState=??? X
+                2)不会产生任何副作用
+                3)不能调用Data.now()或者Math.random()等不纯的方法
+        3.dedux的reducer函数必须是一个纯函数
+
+## 二十二、求和案例_react-redux开发者工具的使用
+        (1).npm i redux-devtools-extension
+        (2).store中进行配置
+                import {composeWithDevTools} from 'redux-devtools-extension'
+                const store = createStore(allReducer,composeWithDevTools(applyMiddleware(thunk)))
+
+## 二十三、求和案例_react-redux最终版
+        (1).所有变量名字要规范,尽量触发对象的简写形式
+        (2).reducers文件夹中，编写index.js专门用于汇总并暴露所有的reducer
+
+# 扩展
+## 一、setState更新状态的2种写法
+        (1).setState(stateChange,[callback])-------对象式的state
+                1.stateChange为状态改变对象(该对象可以体现出状态的更改)
+                2.callback是可选的回调函数，它在状态更新完毕、界面也更新后(render调用后)才被调用
+        (2).setState(updater,[callback])-------函数式的setState
+                1.updater为返回stateChange对象的函数。
+                2.updater可以接收到state和props。
+                3.callback是可选的回调函数,它在状态更新、界面也更新后(render)
+        总结:
+                1.对象式的setState是函数式的setState的简写方式(语法糖)
+                2.使用规则:
+                        (1).如果新状态不依赖于原状态===>使用对象方式
+                        (2).如果新状态依赖于原状态===>使用函数方式
+                        (3).如果需要在setState()执行后获取最新的状态数据，要在第二个
+                        callback函数中读取
+
+## 二、lazyLoad
+        功能:一次不加载所有导航组件，只有点击导航组件时才加载导航组件
+        //1.引入lazy
+        import {lazy,Suspense} from 'react'
+        //2.通过React的lazy函数配合import()函数动态加载路由组件===>路由组件代码会被分开打包
+        const Login = lazy(()=>import('@/pages/Login'))
+
+        //3.通过<Suspense>指定在加载得到路由打包文件前显示一个自定义loading界面
+        <Suspense fallback={<Xxxx/>}>
+                <Switch>
+                        <Route path='/xxx' component={Xxxx} />
+                        <Redirect to='/login' />
+                </Switch>
+        </Suspense>
+

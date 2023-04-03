@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
-import Count from './containers/Count'
-import Person from './containers/Person'
-import Get from './containers/Get'
-import store from './redux/store'
+import Demo from './components/2_lazyLoad'
 export default class App extends Component {
   
   render() {
     
     return (
       <div>
-        <Count/>
-        <hr/>
-        <Person/>
+        <Demo/>
       </div>
     )
   }
