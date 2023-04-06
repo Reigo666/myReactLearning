@@ -196,9 +196,110 @@
                 (2).语法：const refContainer = useRef()
                 (3).作用:保存标签对象,功能与React.createRef()一样
 
-        ### 6.Fragment
-                一个空标签,不会显示在真实doms上
-                <Fragment></Fragment>
-                <></>
+## 四、Fragment的使用
+        一个空标签,不会显示在真实doms上
+        <Fragment></Fragment>
+        <></>
 
+## 五、Context的使用
+        1)创建Context容器对象：
+                const XxxContext = React.createContext()
+        2)渲染子组时，外面包裹xxxContext.Provider,通过value属性给后代组件传递数据：
+                <xxxContext.Provider value={数据}>
+                        子数组
+                </xxxContxt.Provider>
+        3)后代组件读取数据：
+                //第一种方式：仅适用于类组件
+                static contextType = xxxContext //声明接收context
+                const {xxx} = this.context //读取context中的value数据
 
+                //第二种方式：函数组件与类组件都可以使用
+                <xxxContext.Consumer>
+                        {
+                                value=>(//value就是context中的value数据
+                                        要显示的内容
+                                )
+                        }
+                </xxxContext.Consumer>
+
+## 六、组件优化
+### Component的2个问题
+        1.只要执行setState(),即使不改变状态数据，组件也会重新render()
+        2.只当前组件重新render(),就会自动重新render子组件===>效率低
+### 效率高的做法
+        只有当组件的state或props数据发生改变时才重新render()
+### 原因
+        Component中的shouldComponentUpdate()总是返回true
+### 解决
+        办法1：
+                重写shouldComponentUpdate()方法
+                比较新旧state或props数据，如果有变化才返回true，如果没有返回false
+        办法2：
+                使用PureComponent
+                PureComponent重写了shouldComponentUpdate(),只有state或props数据有变化才返回true
+        注意：
+                不要直接修改state数据，而是要产生新数据
+                只是进行state和props数据的浅比较，如果只是数据对象内部数据变了，返回false(即setState中将原修改后的state obj传入，由于地址一样，虽然state发生了改变，但是shouldComponentUpdate中检测到newstate和state地址一致，直接return false)
+        项目中一般使用PureComponent来优化
+
+## 七、render props
+### 如何向组件内部动态传入带内容的结构(标签)
+        Vue中:
+                使用slot技术，也就是通过组件标签体传入结构 <A><B/></A>
+        React中:
+                使用children props:通过组件标签体传入结构
+                使用render props：通过组件标签属性传入结构，一般用render函数属性
+### children props
+        <A>
+                <B>xxxx</B>
+        </A>
+        {this.props.children}
+        问题：如果B组件需要A组件内的数据,===>做不到
+### render props
+        <A render={(data)=><C data={data}/>}/>
+        A组件：{this.props.render(内部state数据)}
+        C组件：读取A组件传入的数据显示{this.props.data}
+
+## 八、错误边界
+### 理解：
+        错误边界(Error boundary):用来捕获后代组件错误，渲染出备用页面
+### 特点：
+        只能捕获后代组件生命周期产生的错误，不能捕获自己组件产生的错误和其他组件在合成事件、定时器中产生的错误。
+        备注：生命周期指的是render之内出现错误
+### 使用方式：
+        getDerivedStateFromErrror配合componentDidCatch
+
+        //生命周期函数，一旦后台组件报错，就会触发
+        static getDerivedStateFromError(error){
+                console.log(error)
+                //在render之前触发
+                // 返回新的state
+                return{
+                        hasError:true
+                };
+        }
+
+        componentDidCatch(error,info){
+                //统计页面的错误，发送请求发送到后台去
+                console.log(error,info)
+        }
+
+## 九.组件通信方式总结
+### 组件间的关系：
+      - 父子组件
+      - 兄弟组件(非嵌套组件)
+      - 祖孙组件(跨级组件)
+### 几种通信方式：
+        1.props:
+                (1).children props
+                (2).render props
+        2.消息订阅-发布：
+                pubs-sub、event等等
+        3.集中式管理：
+                redux、dva等等
+        4.Context: 
+                生产者-消费者模式(Provide-Consumer)
+### 比较好的搭配方式：
+        父子组件：props
+        兄弟组件：消息订阅-发布、集中式管理
+        祖孙组件(跨级组件)：消息订阅-发布。集中式管理、conText(开发用的少，封装插件用的多)
