@@ -1,29 +1,17 @@
 import React, { Component } from 'react'
-import {NavLink, useRoutes,useNavigate} from 'react-router-dom'
+import {NavLink, useRoutes} from 'react-router-dom'
 
 import routes from './routes'
 
 export default function App() {
     // 根据路由表生成对应的路由规则
     const element=useRoutes(routes)
-    const navigate=useNavigate()
-    function forward(){
-        navigate(1)
-    }
-
-    function back(){
-        navigate(-1)
-    }
-
     return (
         <div>
         <div className="row">
             <div className="col-xs-offset-2 col-xs-8">
                 <div className="page-header">
                     <h2>React Router Demo</h2>
-                    <button onClick={back}>后退</button>
-                    <button onClick={forward}>前进</button>
-
                 </div>
             </div>
         </div>
